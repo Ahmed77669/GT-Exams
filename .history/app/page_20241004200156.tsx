@@ -1,5 +1,4 @@
 'use client'
-import Login from "@/components/login";
 import NavBarHome from "@/components/Navbar";
 import Signup from "@/components/signup";
 import Image from "next/image";
@@ -9,7 +8,7 @@ export default function Home() {
     <main>
 <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center z-[1000]">
 <div className="p-5 rounded-lg max-w-[1600px] w-full">
-      <Login/>
+      <Signup/>
       </div>
       </div>
           </main>
