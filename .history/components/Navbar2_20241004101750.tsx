@@ -1,12 +1,12 @@
 "use client";
 import React, { useState, useRef, useEffect } from "react";
-import GT_logo from "../public/Component 6.png";
-import notifications from "../public/icon (1).png";
-import message from "../public/455.png";
+import GT_logo from "@/public/Component 6.png";
+import notifications from "@/public/icon (1).png";
+import message from "@/public/455.png";
 import Link from "next/link";
 import { Inter } from "next/font/google";
 import Image from "next/image";
-import Avatar from "../public/Avatar.png";
+import Avatar from "@/public/Avatar.png";
 import { motion } from "framer-motion";
 import { FaBars, FaTimes } from "react-icons/fa";
 
@@ -24,18 +24,18 @@ const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef(null);
 
-  // const handleOutsideClick = (event:any) => {
-  //   if (menuRef.current && !menuRef.current.contains(event.target)) {
-  //     setIsOpen(false);
-  //   }
-  // };
+  const handleOutsideClick = (event:any) => {
+    if (menuRef.current && !menuRef.current.contains(event.target)) {
+      setIsOpen(false);
+    }
+  };
 
-  // useEffect(() => {
-  //   document.addEventListener("mousedown", handleOutsideClick);
-  //   return () => {
-  //     document.removeEventListener("mousedown", handleOutsideClick);
-  //   };
-  // }, []);
+  useEffect(() => {
+    document.addEventListener("mousedown", handleOutsideClick);
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, []);
 
   const toggleMenu = () => {
     setIsOpen((prev) => !prev);
