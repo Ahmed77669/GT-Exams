@@ -33,6 +33,9 @@ const Signup: React.FC<SignupProps> = ({ closeSignup, toggleForm }) => {
     if (user) {
       const response = await fetch('/api/auth/register', {
           method: "POST",
+          headers: {
+            'Content-type': 'text/plain',
+        }, 
           body: JSON.stringify(user)   
       });
       // route.push('./home');

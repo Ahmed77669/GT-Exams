@@ -24,7 +24,7 @@ const pageVariants = {
 };
 
 const Signup: React.FC<SignupProps> = ({ closeSignup, toggleForm }) => {
-  const [user, setUser] = useState({ name: "", email: "", password: ""});
+  const [user, setUser] = useState({ name: "s", email: "s", password: "s"});
   const route = useRouter();
 
   const handleSubmit = async (event: React.FormEvent) => {
@@ -33,7 +33,11 @@ const Signup: React.FC<SignupProps> = ({ closeSignup, toggleForm }) => {
     if (user) {
       const response = await fetch('/api/auth/register', {
           method: "POST",
-          body: JSON.stringify(user)   
+          // body: JSON.stringify(user),
+          headers: {
+            'Content-Type': 'application/json', // Set the Content-Type to application/json
+          },
+          body: JSON.stringify(user) 
       });
       // route.push('./home');
       return response;

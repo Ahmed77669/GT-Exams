@@ -29,13 +29,12 @@ const Signup: React.FC<SignupProps> = ({ closeSignup, toggleForm }) => {
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    console.log(user);
     if (user) {
       const response = await fetch('/api/auth/register', {
           method: "POST",
-          body: JSON.stringify(user)   
+          body: JSON.stringify(user)
       });
-      // route.push('./home');
+      route.push('./home');
       return response;
   }
   return null;

@@ -24,24 +24,42 @@ const pageVariants = {
 };
 
 const Signup: React.FC<SignupProps> = ({ closeSignup, toggleForm }) => {
-  const [user, setUser] = useState({ name: "", email: "", password: ""});
+  const [user, setUser] = useState({ name: "", email: "", password: "" });
   const route = useRouter();
-
+  
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     console.log(user);
+  
     if (user) {
-      const response = await fetch('/api/auth/register', {
+      try {
+        const response = await fetch('/api/auth/register', {
           method: "POST",
-          body: JSON.stringify(user)   
-      });
-      // route.push('./home');
-      return response;
-  }
-  return null;
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(user)
+        });
+  
+        const contentType = response.headers.get("content-type");
+  
+        if (contentType && contentType.includes("application/json")) {
+          const result = await response.json(); // Try parsing as JSON if the content-type is JSON
+          if (response.ok) {
+            route.push('./home');
+          } else {
+            console.error("Registration failed:", result);
+          }
+        } else {
+          // If the response is not JSON, log the raw response
+          const textResponse = await response.text();
+          console.error("Unexpected response format:", textResponse);
+        }
+      } catch (error) {
+        console.error("An error occurred:", error);
+      }
+    }
   };
-
-
 
 
   return (

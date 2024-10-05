@@ -24,23 +24,32 @@ const pageVariants = {
 };
 
 const Signup: React.FC<SignupProps> = ({ closeSignup, toggleForm }) => {
-  const [user, setUser] = useState({ name: "", email: "", password: ""});
+  const [user, setUser] = useState({ name: "", email: "", password: "" });
   const route = useRouter();
-
+  
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     console.log(user);
+    
     if (user) {
       const response = await fetch('/api/auth/register', {
-          method: "POST",
-          body: JSON.stringify(user)   
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json" // Include the Content-Type header
+        },
+        body: JSON.stringify(user) // Ensure the body is a JSON string
       });
-      // route.push('./home');
-      return response;
-  }
-  return null;
+  
+      const result = await response.json(); // Parse the JSON response
+      
+      if (response.ok) {
+        // If registration is successful, navigate to home
+        route.push('./home');
+      } else {
+        console.error("Registration failed:", result); // Log any error from the server
+      }
+    }
   };
-
 
 
 

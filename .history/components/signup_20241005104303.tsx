@@ -29,19 +29,33 @@ const Signup: React.FC<SignupProps> = ({ closeSignup, toggleForm }) => {
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    console.log(user);
-    if (user) {
+  
+    // Basic validation (make sure all fields are filled)
+    if (!user.name || !user.email || !user.password) {
+      console.error("All fields are required.");
+      return;
+    }
+  
+    try {
       const response = await fetch('/api/auth/register', {
-          method: "POST",
-          body: JSON.stringify(user)   
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json", // Ensure you're sending JSON data
+        },
+        body: JSON.stringify(user) // Convert the user object to a JSON string
       });
-      // route.push('./home');
-      return response;
-  }
-  return null;
+  
+      const data = await response.json(); // Parse JSON response
+      if (response.ok) {
+        console.log("User registered successfully:", data);
+        route.push('./home'); // Navigate to the home page
+      } else {
+        console.error("Registration failed:", data); // Log error details
+      }
+    } catch (error) {
+      console.error("Error occurred during registration:", error);
+    }
   };
-
-
 
 
   return (
